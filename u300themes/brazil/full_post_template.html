@@ -1,0 +1,20 @@
+<div class="post">
+    <h1><a class="post_header" href="/$base_url/$url_title/">$title</a></h1>
+    <div class="post_body">$body</div>
+    <div class="post_footer">Posted by <span class="post_poster">$poster</span> at <span class="post_timestamp">$date</span> - <span class="post_comment_count">$comment_count</span></div>
+    $comments
+    <div class="new_comment">
+        <h3>Add a comment</h3>
+        <form method="POST" action="/$base_url/$title/">
+            <div>
+                <label id="commenter_label"
+                       for="commenter">Your name (optional):</label>
+                <input type="text" name="commenter" id="commenter"/><br/><br/>
+                <label id="body_label" for="body">Comment:</label><br/>
+                <textarea rows="0" cols="0" name="body" id="body"></textarea>
+                <br/>
+                <button class="submit_button" type="submit">Add Comment</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>$blog_title</title>
+        <link rel="alternate" type="application/rss+xml"
+              title="$rss_title" href="/$base_url/?p=rss"/>
+        <link rel="stylesheet" href="$css_url"/>
+        <script type="text/javascript">
+            function zeroPad(n, digits) {
+                n = n.toString();
+                while (n.length < digits) {
+                    n = '0' + n;
+                }
+                return n;
+            }
+            function getTimestamp(dateThing) {
+                return d.getFullYear() + '-' + zeroPad(d.getMonth()+1, 2)
+                                       + '-' + zeroPad(d.getDate(), 2)
+                                       + ' ' + zeroPad(d.getHours(), 2)
+                                       + ':' + zeroPad(d.getMinutes(), 2)
+                                       + ':' + zeroPad(d.getSeconds(), 2);
+                // return dateThing.toString();
+            }
+            function getLocalizedTimestamp(dateThing) {
+                return d.getUTCFullYear() + '-' + zeroPad(d.getUTCMonth()+1, 2)
+                                          + '-' + zeroPad(d.getUTCDate(), 2)
+                                          + ' ' + zeroPad(d.getUTCHours(), 2)
+                                          + ':' + zeroPad(d.getUTCMinutes(), 2)
+                                          + ':' + zeroPad(d.getUTCSeconds(), 2);
+                // return dateThing.toLocaleString();
+            }
+            function localizeAllTimestamps() {
+                var allSpans = document.getElementsByTagName('span');
+                for (i=0; i<allSpans.length; i++) {
+                    var span = allSpans[i];
+                    if (span.className.indexOf('timestamp') != -1) {
+                        milliseconds = parseInt(span.firstChild.nodeValue);
+                        d = new Date(milliseconds);
+                        if (span.className.indexOf('post_timestamp') != -1) {
+                            timestamp = getTimestamp(d);
+                        } else if (span.className.indexOf('comment') != 1) {
+                            timestamp = getLocalizedTimestamp(d);
+                        }
+                        span.firstChild.nodeValue = timestamp;
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body onload="localizeAllTimestamps()">
+        <h1><a class="title_link" href="/$base_url">$blog_title</a></h1>
+        $body
